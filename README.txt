@@ -1,0 +1,1 @@
+No http digest, é necessário fazer duas requisições para logar. Na primeira, que dará 401, você deve obter os dados "realm", "nonce" e "opaque" que são retornados no header da resposta. Após isso, preencha os campos avançados do postman de forma manual. Aí funcionará.
