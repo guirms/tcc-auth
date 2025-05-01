@@ -6,7 +6,7 @@ app = Flask(__name__)
 auth = HTTPBasicAuth()
 
 users = {
-    "admin": generate_password_hash("senha123")
+    "admin": generate_password_hash("SenhaValida")
 }
 
 @auth.verify_password
