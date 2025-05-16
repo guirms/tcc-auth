@@ -6,7 +6,7 @@ app.config['SECRET_KEY'] = 'chave_teste_digest'
 auth = HTTPDigestAuth(realm="Authentication Required")  # compatível com o Postman
 
 users = {
-    "admin": "senha123"
+    "admin": "123"
 }
 
 @auth.get_password
