@@ -1,32 +1,33 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request
 import jwt
+import datetime
+import json
 
 app = Flask(__name__)
-SECRET_KEY = "chave_super_secreta"  # simulação de chave do servidor
+app.secret_key = 'chave-secreta'
 
-@app.route('/login', methods=['POST'])
+@app.route('/login')
 def login():
+    # Gera o JWT
     payload = {
-        "user_id": 123,
-        "role": "admin"
+        'user': 'admin',
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
     }
-    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-    return jsonify(token=token)
+    token = jwt.encode(payload, app.secret_key, algorithm='HS256')
+    return render_template('login.html', token=token)
 
-@app.route('/protegido', methods=['GET'])
-def protegido():
-    auth_header = request.headers.get('Authorization')
-    if not auth_header:
-        return jsonify({"erro": "Token ausente"}), 401
+@app.route('/refletido')
+def refletido():
+    # Pega parâmetro da URL: /refletido?msg=<script>...</script>
+    msg = request.args.get('msg', '')
+    return render_template('refletido.html', msg=msg)
 
-    token = auth_header.split(" ")[1]
-
-    try:
-        # VULNERABILIDADE: NÃO está validando o algoritmo corretamente
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256", "none"])
-        return jsonify({"mensagem": f"Acesso autorizado para o usuário {payload['user_id']} com papel {payload['role']}"})
-    except Exception as e:
-        return jsonify({"erro": f"Token inválido: {str(e)}"}), 401
+@app.route('/coletar', methods=['POST'])
+def coletar():
+    # Endpoint que simula o servidor externo para capturar o token
+    data = request.get_json()
+    print(f"[!] TOKEN ROUBADO: {data.get('token')}")
+    return '', 204
 
 if __name__ == '__main__':
     app.run(debug=True)
