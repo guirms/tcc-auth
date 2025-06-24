@@ -26,13 +26,3 @@ Cada método foi submetido a testes de segurança controlados, incluindo:
 - Simulações de CSRF no OAuth 2.0
 
 Os testes foram realizados **intencionalmente em ambiente HTTP**, para permitir a interceptação do tráfego.
-
-## 🧰 Tecnologias Utilizadas
-
-- [Python](https://www.python.org/)
-- [Flask](https://flask.palletsprojects.com/)
-- [Postman](https://www.postman.com/)
-- [Wireshark](https://www.wireshark.org/)
-- [Burp Suite Community Edition](https://portswigger.net/burp)
-- [Google Chrome / Opera GX (para testes de navegador)]
-- [Google Authenticator](https://support.google.com/accounts/answer/1066447?hl=pt-BR)
